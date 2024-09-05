@@ -3,21 +3,21 @@
 </h2>
 
 <div align="center" margin-bottom="6em">
-<a target="_blank" href="https://github.com/Germany321">Xiongkun Linghu<sup>✶</sup></a>,
-<a target="_blank" href="https://huangjy-pku.github.io/">Jiangyong Huang<sup>✶</sup></a>,
-<a target="_blank" href="https://nxsedson.github.io/">Xuesong Niu<sup>✶</sup></a>,
-<a target="_blank" href="https://jeasinema.github.io/">Xiaojian Ma</a>,
-<a target="_blank" href="https://buzz-beater.github.io/">Baoxiong Jia</a>,
-<a target="_blank" href="https://siyuanhuang.com/">Siyuan Huang</a>
+<a target="_blank" rel="external nofollow noopener" href="https://github.com/Germany321">Xiongkun Linghu<sup>✶</sup></a>,
+<a target="_blank" rel="external nofollow noopener" href="https://huangjy-pku.github.io/">Jiangyong Huang<sup>✶</sup></a>,
+<a target="_blank" rel="external nofollow noopener" href="https://nxsedson.github.io/">Xuesong Niu<sup>✶</sup></a>,
+<a target="_blank" rel="external nofollow noopener" href="https://jeasinema.github.io/">Xiaojian Ma</a>,
+<a target="_blank" rel="external nofollow noopener" href="https://buzz-beater.github.io/">Baoxiong Jia</a>,
+<a target="_blank" rel="external nofollow noopener" href="https://siyuanhuang.com/">Siyuan Huang</a>
 </div>
 &nbsp;
 
 <div align="center">
-    <a href="https://arxiv.org/abs/2409.02389" target="_blank">
+    <a href="https://arxiv.org/abs/2409.02389" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Paper-arXiv-deepgreen" alt="Paper arXiv"></a>
-    <a href="https://msr3d.github.io/" target="_blank">
+    <a href="https://msr3d.github.io/" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Page-MSR3D-9cf" alt="Project Page"></a>
-    <a href="https://drive.google.com/drive/folders/1cRghPKwnYMr6a5DSncFvRB6Ep0T9ywU8" target="_blank">
+    <a href="https://drive.google.com/drive/folders/1cRghPKwnYMr6a5DSncFvRB6Ep0T9ywU8" rel="external nofollow noopener" target="_blank">
     <img src="https://img.shields.io/badge/Data-MSR3D-blue" alt="Data"></a>
 </div>
 &nbsp;
