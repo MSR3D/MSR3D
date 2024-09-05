@@ -4,8 +4,8 @@
 
 <div align="center" margin-bottom="6em">
 <a target="_blank" href="https://github.com/Germany321">Xiongkun Linghu<sup>✶</sup></a>,
+<a target="_blank" href="https://huangjy-pku.github.io/">Jiangyong Huang<sup>✶</sup></a>,
 <a target="_blank" href="https://nxsedson.github.io/">Xuesong Niu<sup>✶</sup></a>,
-<a target="_blank" href="https://huangjy-pku.github.io/">Jiangyong Huang</a>,
 <a target="_blank" href="https://jeasinema.github.io/">Xiaojian Ma</a>,
 <a target="_blank" href="https://buzz-beater.github.io/">Baoxiong Jia</a>,
 <a target="_blank" href="https://siyuanhuang.com/">Siyuan Huang</a>
