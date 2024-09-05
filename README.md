@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/Paper-arXiv-deepgreen" alt="Paper arXiv"></a>
     <a href="https://msr3d.github.io/" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Page-MSR3D-9cf" alt="Project Page"></a>
-    <a href="https://drive.google.com/drive/folders/1cRghPKwnYMr6a5DSncFvRB6Ep0T9ywU8" rel="external nofollow noopener" target="_blank">
+    <a href="https://docs.google.com/forms/d/e/https://docs.google.com/forms/d/e/1FAIpQLSdzj25kXcthCKtypAI0wQP8j16e9F7ODBroL4SCH_ly8_3rKw/viewform?usp=sf_link" rel="external nofollow noopener" target="_blank">
     <img src="https://img.shields.io/badge/Data-MSR3D-blue" alt="Data"></a>
 </div>
 &nbsp;
