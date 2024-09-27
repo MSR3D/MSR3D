@@ -59,14 +59,11 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 
 If you find our work helpful, please cite:
 ```bibtex
-@misc{linghu2024multimodalsituatedreasoning3d,
-      title={Multi-modal Situated Reasoning in 3D Scenes}, 
-      author={Xiongkun Linghu and Jiangyong Huang and Xuesong Niu and Xiaojian Ma and Baoxiong Jia and Siyuan Huang},
-      year={2024},
-      eprint={2409.02389},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2409.02389}, 
+@article{linghu2024multi,
+  title={Multi-modal Situated Reasoning in 3D Scenes},
+  author={Linghu, Xiongkun and Huang, Jiangyong and Niu, Xuesong and Ma, Xiaojian and Jia, Baoxiong and Huang, Siyuan},
+  journal={arXiv preprint arXiv:2409.02389},
+  year={2024}
 }
 ```
 
