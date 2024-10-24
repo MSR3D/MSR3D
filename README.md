@@ -45,7 +45,7 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 
 ## 🔥 News
 - \[2024-10\] We released the dataset, which has been structured to facilitate evaluation of multimodal large language models(MLLMs).
-- \[2024-9\] 🎉 Our paper is accepted by NeurIPS Datasets and Benchmarks 2024!
+- \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks!
 - \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/)
 
 ## 📝 TODO List
