@@ -62,9 +62,8 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 
 ## 📝 TODO List
 
-- [x] Test set
-- [ ] Train/val set
-- [ ] Point cloud and images
+- [x] Test set, with ground truth multi-view images, object locations and attributes
+- [x] Train/val set
 - [ ] Evaluation code
 - [ ] Training code
 
