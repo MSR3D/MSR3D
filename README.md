@@ -26,6 +26,18 @@
 <img src="asset/MSR3D_teaser_crop.jpeg" width="85%" alt="LEO Teaser">
 </div>
 
+### Data Distribution
+MSQA includes 251K situated question-answering pairs across 9 distinct question categories, covering complex scenarios within 3D scenes.
+<div align="middle">
+<img src="asset/data_distribution.png" width="85%" alt="LEO Teaser">
+</div>
+
+### Model
+MSR3D accepts 3D point cloud, text-image interleaved situation, location and orientation and question as multi-modal input. It has stronger situation modeling capability than LEO.
+<div align="middle">
+<img src="asset/model.png" width="85%" alt="LEO Teaser">
+</div>
+
 ## 📋 Contents
 
 1. [Introduction](#-introduction)
@@ -45,7 +57,7 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 
 ## 🔥 News
 - \[2024-10\] We released the dataset, which has been structured to facilitate evaluation of multimodal large language models(MLLMs).
-- \[2024-9\] 🎉 Our paper is accepted by NeurIPS Datasets and Benchmarks 2024!
+- \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks!
 - \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/)
 
 ## 📝 TODO List
