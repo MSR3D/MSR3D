@@ -33,7 +33,7 @@ MSQA includes 251K situated question-answering pairs across 9 distinct question 
 </div>
 
 ### Model
-MSR3D accepts 3D point cloud, text-image interleaved situation, location and orientation and question as multi-modal input. It has stronger situation modeling capability than LEO.
+MSR3D accepts 3D point cloud, text-image interleaved situation, location, orientation, and question as multi-modal input. It has a stronger situation modeling capability than LEO.
 <div align="middle">
 <img src="asset/model.png" width="85%" alt="LEO Teaser">
 </div>
@@ -56,9 +56,9 @@ To address these limitations, we propose <b>Multi-modal Situated Question Answer
 Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark to evaluate models' grounding of actions and transitions between situations</b>. Comprehensive evaluations on reasoning and navigation tasks highlight the limitations of existing vision-language models and underscore the importance of handling multi-modal interleaved inputs and situation modeling. Experiments on data scaling and cross-domain transfer further demonstrate <b>the effectiveness of leveraging MSQA as a pre-training dataset for developing more powerful situated reasoning models</b>, contributing to advancements in 3D scene understanding for embodied AI.
 
 ## 🔥 News
-- \[2024-10\] We released the dataset, which has been structured to facilitate evaluation of multimodal large language models(MLLMs).
-- \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks!
-- \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/)
+- \[2024-10\] We released the dataset, which has been structured to facilitate the evaluation of multimodal large language models (MLLMs).
+- \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks Track!
+- \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/).
 
 ## 📝 TODO List
 
@@ -74,7 +74,7 @@ If you find our work helpful, please cite:
 @article{linghu2024multi,
   title={Multi-modal Situated Reasoning in 3D Scenes},
   author={Linghu, Xiongkun and Huang, Jiangyong and Niu, Xuesong and Ma, Xiaojian and Jia, Baoxiong and Huang, Siyuan},
-  journal={arXiv preprint arXiv:2409.02389},
+  journal={Advances in Neural Information Processing Systems},
   year={2024}
 }
 ```
