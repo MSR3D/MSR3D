@@ -81,13 +81,13 @@ def create_arrow(origin, direction, scale=0.5):
 if __name__ == "__main__":
 
     # load qa pair
-    root_dir = "data"
+    root_dir = ""
     data_dict = load_json(f"{root_dir}/MSQA_scannet_test_v1.json")
+    pcd_root = ""  # Path to the directory containing the point cloud data; e.g., "data/pcd_with_global_alignment/" 
     # Load the data
-    for scan_id, response in data_dict.items():
-        for qa_pair in response['qa_pairs']:
-            pcd_path = "data/point_clouds"
-            pcd_path = os.path.join(pcd_path, scan_id + ".pth")
+    for scan_id, data in data_dict.items():
+        for qa_pair in data['response']:
+            pcd_path = os.path.join(pcd_root, scan_id + ".pth")
             pcd_data = torch.load(pcd_path)
             points, colors, instance_labels = pcd_data[0], pcd_data[1], pcd_data[-1]
             colors = colors / 127.5 - 1
