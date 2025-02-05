@@ -6,6 +6,19 @@ import numpy as np
 import open3d as o3d
 from scipy.spatial.transform import Rotation as R
 
+import numpy as np
+
+def quaternion_to_euler(quaternion):
+    euler_angles = R.from_quat(quaternion).as_euler('xyz', degrees=False)
+    x_angle, y_angle, z_angle = euler_angles
+    return [x_angle, y_angle, z_angle]
+
+def get_view_vector(quaternion):
+    # translate quaternion to view vector in MSNN
+    angle = quaternion_to_euler(quaternion)[-1]   # angle rotate around z axis
+    view_vector = [np.cos(angle), np.sin(angle), 0.0]
+    return view_vector
+
 def load_json(path):
     with open(path, 'r') as f:
         json_file = json.load(f)
@@ -80,10 +93,10 @@ def create_arrow(origin, direction, scale=0.5):
 
 if __name__ == "__main__":
 
-    # load qa pair
+    # # load MSQA data
     root_dir = ""
     data_dict = load_json(f"{root_dir}/MSQA_scannet_test_v1.json")
-    pcd_root = ""  # Path to the directory containing the point cloud data; e.g., "data/pcd_with_global_alignment/" 
+    pcd_root = "/mnt/fillipo/scratch/masaccio/existing_datasets/scannet/scan_data/pcd_with_global_alignment"  # Path to the directory containing the point cloud data; e.g., "data/pcd_with_global_alignment/" 
     # Load the data
     for scan_id, data in data_dict.items():
         for qa_pair in data['response']:
@@ -92,5 +105,20 @@ if __name__ == "__main__":
             points, colors, instance_labels = pcd_data[0], pcd_data[1], pcd_data[-1]
             colors = colors / 127.5 - 1
 
-            # Visualize the point cloud with instance labels
             visualize_point_cloud_with_instances(points, colors, instance_labels, qa_pair['location'], qa_pair['orientation'], qa_pair['situation'])
+    
+    # load MSNN data
+    root_dir = ""
+    data_dict = load_json(f"{root_dir}/next_step_navi_v1.json")
+    for scan_id, data in data_dict.items():
+        for item_id, item in data.items():
+            if 'scene' in item:
+                continue
+            pcd_path = os.path.join(pcd_root, scan_id + ".pth")
+            pcd_data = torch.load(pcd_path)
+            points, colors, instance_labels = pcd_data[0], pcd_data[1], pcd_data[-1]
+            colors = colors / 127.5 - 1
+            quaternion = np.array(item['orientation'])
+            view_vector = get_view_vector(quaternion)
+
+            visualize_point_cloud_with_instances(points, colors, instance_labels, item['location'], view_vector, item['situation'])
