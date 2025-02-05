@@ -56,7 +56,7 @@ To address these limitations, we propose <b>Multi-modal Situated Question Answer
 Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark to evaluate models' grounding of actions and transitions between situations</b>. Comprehensive evaluations on reasoning and navigation tasks highlight the limitations of existing vision-language models and underscore the importance of handling multi-modal interleaved inputs and situation modeling. Experiments on data scaling and cross-domain transfer further demonstrate <b>the effectiveness of leveraging MSQA as a pre-training dataset for developing more powerful situated reasoning models</b>, contributing to advancements in 3D scene understanding for embodied AI.
 
 ## 🔥 News
-- \[2024-12\] Based on community feedback, we are finalizing the data and evaluation to ensure robustness and organize the training and evaluation code. Further updates will be released in the next few weeks.
+- \[2025-2\] We provide the script to visualize the MSQA/MSNN data, including the situaitions.
 - \[2024-10\] We released the dataset, which has been structured to facilitate the evaluation of multimodal large language models (MLLMs).
 - \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks Track!
 - \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/).

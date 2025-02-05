@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # # load MSQA data
     root_dir = ""
     data_dict = load_json(f"{root_dir}/MSQA_scannet_test_v1.json")
-    pcd_root = "/mnt/fillipo/scratch/masaccio/existing_datasets/scannet/scan_data/pcd_with_global_alignment"  # Path to the directory containing the point cloud data; e.g., "data/pcd_with_global_alignment/" 
+    pcd_root = ""  # Path to the directory containing the point cloud data; e.g., "data/pcd_with_global_alignment/" 
     # Load the data
     for scan_id, data in data_dict.items():
         for qa_pair in data['response']:
