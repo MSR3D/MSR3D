@@ -108,14 +108,14 @@ python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
 
 1. Clone Github repo.
 ```shell
-git clone git@github.com:embodied-generalist/embodied-generalist.git
-cd embodied-generalist
+git clone https://github.com/MSR3D/MSR3D.git
+cd MSR3D
 ```
 
 2. Create `conda` environment and install dependencies.
 ```shell
-conda create -n leo python=3.9
-conda activate leo
+conda create -n msr3d python=3.9
+conda activate msr3d
 
 # install PyTorch, take our version for example
 conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
