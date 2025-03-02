@@ -1,0 +1,197 @@
+# Experiment general info
+name: MSNN # this will be the project name of wandb
+note: from_scratch # this will be the run name of wandb
+
+rng_seed: 42
+num_gpu: 4
+mode: train
+# Choose keywords to feature your saving directory
+naming_keywords: [note]
+base_dir: ""  # must be set
+exp_dir: "" # must be empty, will be set by run.py as base_dir + name + *naming_keywords
+
+pretrain_ckpt_path: ""
+hf_hub_cache_dir: '' # the cache directory for huggingface models, optional
+
+resume: True
+save_frequency: 10000 # how many training steps to save a checkpoint using accerlerator
+ckpt_path: "" # where to resume from, leave empty to resume from the latest checkpoint
+
+debug:
+  flag: True
+  debug_test: False
+  debug_size: 20
+  save_tensor_flag: False
+
+logger:
+  name: "wandb"
+  entity: ""
+
+# Training details
+trainer: "LeoTrainer"
+
+solver:
+  gradient_accumulation_steps: 5
+  # zero_stage: 0
+  # offload_optimizer_device: cpu
+  # offload_param_device: cpu
+  lr: ${solver.optim.args.lr}
+  grad_norm: 5.0
+  epochs: 10
+  eval_interval: 1
+  num_batch_eval: 100
+  optim:
+    name: "AdamW"
+    args:
+      lr: 3e-5
+      betas: [0.9, 0.999]
+      weight_decay: 0.05
+  sched:
+    name: "warmup_cosine_instructblip"
+    args:
+      warmup_steps: 400   # steps * num_gpus
+
+# configs of all datasets
+data:
+  msr3dmix:
+    args:
+      mix: [scannet_one_step_navi] # scannet_one_step_navi 
+      ratio: 1.0
+      few_shot_num: 0
+      num_points: 1024
+
+  next_step_navigation:
+    args:
+      max_obj_len: 60
+      num_points: 1024
+      pc_type: 'gt'
+      action_type: 'four_direction'
+
+  process_args:
+    img_process_args:
+      bbox_keep_ratio: 0.5
+      bbox_expand: 0.1
+      img_processer: 'navigation_img_processer' #"openai/clip-vit-base-patch32"
+      tgt_img_size: [224, 224]
+
+  scan_family_base: "" # must be set
+
+  msnn_base: ""   # msnn_scannet.json must be set
+
+  # split one data item into multiple pieces roughly based on this, if needed
+  max_text_out_token_len: ${model.llm.max_out_len}
+
+# task details (dataset, dataloader, evaluator)
+task:
+  msr3d_train:
+    mode: [train]
+    dataset: MSR3DMix
+    dataset_wrapper: LeoScanFamilyDatasetWrapper # object padding
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    train_dataloader_args: ${dataloader.train}
+    eval_dataloader_args: ${dataloader.eval}
+  
+  one_step_navi:
+    mode: [val]
+    dataset: MSR3DMSNN
+    dataset_wrapper: LeoScanFamilyDatasetWrapper
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: OneStepNavInstructionEval
+
+# shared dataset_wrapper args
+dataset_wrapper:
+  args:
+    max_obj_len: 60
+    
+# shared eval args
+eval:
+  save: True # prediction saving does not work for now
+
+# shared dataloader args
+dataloader:
+  train:
+    # This is a per-gpu batchsize
+    batchsize: 4
+    num_workers: 2
+  eval:
+    # This is a per-gpu batchsize
+    batchsize: 4
+    num_workers: 2
+
+# Model details
+model:
+  name: MSR3D
+  prompter:
+    model:
+      name: OSE3DSituation
+      situation_type: 'as_transform_for_objects' # 'as_object', 'as_object_add_loc', 'as_embedding', 'as_transform_for_objects'
+      scene_token_len: 60
+      loc_fourier_dim: 63
+      hidden_size: 256
+      label_size: 300
+      vision_backbone_name: gtpcd # gt, gtpcd
+      # (S)patial-attention
+      use_spatial_attn: True
+      # (E)mbodied agent token
+      use_anchor: True
+      # additional additive orientation feature (to object features)
+      use_orientation: True
+      fourier_size: 84
+      attn_flat:
+        use_attn_flat: False
+        mcan_flat_mlp_size: 512
+        mcan_flat_glimpses: 1
+        mcan_flat_out_size: 1024
+      vision:
+        name: PcdObjEncoder
+        args:
+          sa_n_points: [32, 16, null]
+          sa_n_samples: [32, 32, null]
+          sa_radii: [0.2, 0.4, null]
+          sa_mlps: [[3, 64, 64, 128], [128, 128, 128, 256], [256, 256, 512, 768]]
+          dropout: 0.1
+          freeze: True
+          path: "" # must be set
+      spatial_encoder:
+        dim_loc: 6
+        num_attention_heads: 8
+        dim_feedforward: 2048
+        dropout: 0.1
+        activation: gelu
+        spatial_multihead: True
+        spatial_dim: 5  # 1, 4, 5
+        spatial_dist_norm: True
+        spatial_attn_fusion: cond  # cond, mul, bias, ctx, add
+        num_layers: 3
+        obj_loc_encoding: same_all # same_0, same_all, diff_all
+        pairwise_rel_type: center
+  vision_2d:
+    name: Backbone2D
+    freeze: True
+    args:
+      backbone_name: convnext_base
+      backbone_pretrain_dataset: laion2b
+      use_pretrain: True
+      # flat_output: True
+      pooling: avg # or conv, attn
+    # name: BLIP2Backbone
+    # args:
+    #   model_name: Salesforce/blip2-opt-2.7b
+    #   use_pretrain: True
+
+  llm:
+    name: Vicuna7B
+    cfg_path: ""  # must be set
+    truncation_side: right
+    prompt: ""
+    max_out_len: 256
+    max_context_len: 256 # for prompt_after_obj
+    inference_mode: generation
+    clip_fusion: False
+    lora:
+      flag: True
+      rank: 16
+      alpha: 16
+      target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+      dropout: 0.0

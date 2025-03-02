@@ -1,0 +1,1 @@
+python launch.py --mode python --name msr3d --qos lv0b --gpu_per_node 1 --num_nodes 1 --port 2341 --config configs/msnn_scannet.yaml
