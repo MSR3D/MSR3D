@@ -152,7 +152,7 @@ python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
 - **Scand data.** MSR3D takes object centric point cloud as input. You can find the point cloud files in the *pcds* directory. You should unzip the point cloud files to the directories `${scan_family_base}`, `${rscan_base}` and `${ARkit_base}`.
 
 
-# scan data structure
+### Scan data structure
 
 ```
 ├── ${scan_family_base}   # scannet
