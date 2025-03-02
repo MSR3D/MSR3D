@@ -62,48 +62,6 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 - \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks Track!
 - \[2024-9\] We released the [paper](./asset/MSR3D.pdf) of MSR3D. Please check the [webpage](https://msr3d.github.io/).
 
-## 💡 Get started
-1. Clone Github repo.
-```shell
-git clone https://github.com/MSR3D/MSR3D.git
-```
-
-2. Create `conda` environment and install dependencies.
-```shell
-conda create -n msr3d python=3.9
-conda activate msr3d
-
-# install PyTorch, take our version for example
-conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
-
-# install other dependencies with pip
-pip install -r requirements.txt
-
-# install peft separately to escape its install_requires
-pip install peft==0.5.0 --no-deps
-```
-
-3. Install third party libraries (for point cloud backbones). Note that if the installation of `PointNext` fails, you can either 1) comment the line of importing `PointNext` in `model/pcd_backbone.py` or 2) download the [compiled file](https://huggingface.co/datasets/huangjy-pku/LEO_data/blob/main/pointnet2_batch_cuda.cpython-39-x86_64-linux-gnu.so) and place it at `model/pointnext/cpp/pointnet2_batch/`, which may possibly help.
-
-```shell
-cd model
-
-# default PointNet++
-cd pointnetpp
-python setup.py install
-cd ..
-
-# optional: PointNext (if you want to substitute the default PointNet++)
-cd pointnext/cpp/pointnet2_batch
-python setup.py build_ext --inplace
-cd ../../../
-
-cd ..
-# sanity check
-python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
-# for PointNext, run 'from model.pointnext.pointnext import PointNext'
-```
-
 ## 🚀 Get Started
 
 1. Clone Github repo.
