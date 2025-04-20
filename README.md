@@ -88,16 +88,16 @@ pip install peft==0.5.0 --no-deps
 3. Install third party libraries (for point cloud backbones). Note that if the installation of `PointNext` fails, you can either 1) comment the line of importing `PointNext` in `model/pcd_backbone.py` or 2) download the [compiled file](https://huggingface.co/datasets/huangjy-pku/LEO_data/blob/main/pointnet2_batch_cuda.cpython-39-x86_64-linux-gnu.so) and place it at `model/pointnext/cpp/pointnet2_batch/`, which may possibly help.
 
 ```shell
-cd model
+cd modules/third_party/pointnet2
 
 # default PointNet++
-cd pointnetpp
+cd pointnet2
 python setup.py install
 cd ..
 
 cd ..
 # sanity check
-python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
+python -c 'from modules/layers/pointnet.py import PointNetPP'
 ```
 
 ## 📁 Prepare data
