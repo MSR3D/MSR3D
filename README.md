@@ -95,15 +95,9 @@ cd pointnetpp
 python setup.py install
 cd ..
 
-# optional: PointNext (if you want to substitute the default PointNet++)
-cd pointnext/cpp/pointnet2_batch
-python setup.py build_ext --inplace
-cd ../../../
-
 cd ..
 # sanity check
 python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
-# for PointNext, run 'from model.pointnext.pointnext import PointNext'
 ```
 
 ## 📁 Prepare data
