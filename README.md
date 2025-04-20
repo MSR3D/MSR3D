@@ -91,7 +91,6 @@ pip install peft==0.5.0 --no-deps
 cd modules/third_party/pointnet2
 
 # default PointNet++
-cd pointnet2
 python setup.py install
 cd ..
 
