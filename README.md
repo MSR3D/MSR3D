@@ -58,6 +58,7 @@ Additionally, we devise the <b>Multi-modal Next-step Navigation (MSNN) benchmark
 ## 🔥 News
 - \[2025-6\] We release baseline code for GPT-4o to help evaluation for other opensourced multimodal LLMs. This baseline takes ground-truth object labels, locations and attributes as the scene input. You can replace the scene input with other modality such as RGB video frames.
 - \[2025-2\] We release MSR3D_v2 data, training code. This version of data remove some ambiguity in questions and answers.
+- \[2025-2\] We release the script to align the situation viewpoint between SQA3D and MSQA.
 - \[2025-2\] We provide the script to visualize the MSQA/MSNN data, including the situaitions.
 - \[2024-10\] We released the dataset, which has been structured to facilitate the evaluation of multimodal large language models (MLLMs).
 - \[2024-9\] 🎉 Our paper is accepted by NeurIPS 2024 Datasets and Benchmarks Track!
