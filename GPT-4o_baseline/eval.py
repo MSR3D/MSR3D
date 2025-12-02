@@ -122,7 +122,7 @@ def extract_image_paths(one_qa, scan_id, img_dir):
             to_remove.append(tmp)
     for invalid in to_remove:
         matches.remove(invalid)
-    return str(matches)
+    return str(matches), valid_imgs
 
 
 def evaluate(args):
@@ -146,13 +146,13 @@ def evaluate(args):
         scene_str = construct_scene_str(scan_info_scan, attr_info_scan)
         one_qa["scene_info"] = scan_info_scan
         one_qa["scene_info_str"] = scene_str
-        one_qa["img_order"] = extract_image_paths(one_qa, scan_id, args.img_dir)
+        one_qa["img_order"], img_data_list = extract_image_paths(one_qa, scan_id, args.img_dir)
 
         output_suffix = f"{dataset}__{scan_id}__{one_qa['index']}"
         res = gpt_assistant.prompt_one_quest(
             out_suffix=output_suffix,
             text_data=one_qa,
-            img_data_list=[],
+            img_data_list=img_data_list,
             prompt_format_func=prompt_format_func,
             format_check_func=format_check_func,
             format_refine_func=format_refine_func,
