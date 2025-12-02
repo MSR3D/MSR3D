@@ -1,0 +1,254 @@
+# Experiment general info
+name: MSR3D # this will be the project name of wandb
+note: baseline_3_dataset_debug # this will be the run name of wandb
+
+rng_seed: 42
+num_gpu: 2
+mode: train
+# Choose keywords to feature your saving directory
+naming_keywords: [note]
+base_dir: /share/generalvision/linghuxiongkun/projects/MSR3D
+exp_dir: "" # must be empty, will be set by run.py as base_dir + name + *naming_keywords
+# pretrain_ckpt_path: /scratch/maxiaojian/workspace/leo/all_checkpoints/Leo_Alignment_leo_4gpu_bs4_acc8_anchor_ose3_8heads_2048dim/best.pth
+pretrain_ckpt_path: ""
+hf_hub_cache_dir: /scratch/ml/maxiaojian/hf_model_cache
+
+hf_home: /mnt/buffer/linghuxiongkun/conda_envs/hf_home
+
+resume: False
+save_frequency: 10000 # how many training steps to save a checkpoint using accerlerator
+ckpt_path: "" # where to resume from, leave empty to resume from the latest checkpoint
+
+debug:
+  flag: False
+  debug_test: False
+  debug_size: 20
+  save_tensor_flag: False
+
+logger:
+  name: "wandb"
+  entity: "scaling-embodied-reasoning"
+
+# Training details
+trainer: "LeoTrainer"
+
+solver:
+  gradient_accumulation_steps: 5
+  # zero_stage: 0
+  # offload_optimizer_device: cpu
+  # offload_param_device: cpu
+  lr: ${solver.optim.args.lr}
+  grad_norm: 5.0
+  epochs: 10
+  eval_interval: 1
+  num_batch_eval: 100
+  optim:
+    name: "AdamW"
+    args:
+      lr: 3e-5
+      betas: [0.9, 0.999]
+      weight_decay: 0.05
+  sched:
+    name: "warmup_cosine_instructblip"
+    args:
+      warmup_steps: 400   # steps * num_gpus
+
+# configs of all datasets
+data:
+  msr3dmix:
+    args:
+      mix: [msqa_scannet,msqa_3rscan, msqa_arkitscenes]
+      ratio: 1.0
+      few_shot_num: 0
+      num_points: 1024
+
+  msqa_scannet:
+    args:
+      scannet_base: ${data.scan_family_base}
+      anno_dir: ${data.msr3d_base}/scannet
+      max_obj_len: ${dataset_wrapper.args.max_obj_len}
+      num_points: ${data.msr3dmix.args.num_points}
+      few_shot_num: ${data.msr3dmix.args.few_shot_num}
+      msr3d_max_img_num: ${dataset_wrapper.args.msr3d_max_img_num}
+      val_num: 1000
+      pc_type: 'gt'
+  
+  msqa_3rscan:
+    args:
+      rscan_base: ${data.rscan_base}
+      anno_dir: ${data.msr3d_base}/rscan
+      max_obj_len: ${dataset_wrapper.args.max_obj_len}
+      num_points: ${data.msr3dmix.args.num_points}
+      few_shot_num: ${data.msr3dmix.args.few_shot_num}
+      msr3d_max_img_num: ${dataset_wrapper.args.msr3d_max_img_num}
+      val_num: 1000
+      pc_type: 'gt'
+  
+  msqa_arkitscenes:
+    args:
+      arkit_base: ${data.ARkit_base}
+      anno_dir: ${data.msr3d_base}/arkitscenes
+      max_obj_len: ${dataset_wrapper.args.max_obj_len}
+      num_points: ${data.msr3dmix.args.num_points}
+      few_shot_num: ${data.msr3dmix.args.few_shot_num}
+      msr3d_max_img_num: ${dataset_wrapper.args.msr3d_max_img_num}
+      val_num: 1000
+      pc_type: 'gt'
+      
+  sqa3d:
+    args:
+      max_obj_len: 60
+      max_seq_len: 80
+      num_points: 1024
+      pc_type: 'gt'
+      sem_type: '607'
+      filter_lang: False
+      use_unanswer: True
+
+  process_args:
+    img_process_args:
+      bbox_keep_ratio: 0.5
+      bbox_expand: 0.1
+      img_processer: 'navigation_img_processer' #"openai/clip-vit-base-patch32"
+      tgt_img_size: [224, 224]
+
+  scan_family_base: /scratch/masaccio/existing_datasets/scannet
+  rscan_base: /scratch/masaccio/existing_datasets/3RScan-base
+  ARkit_base: /scratch/masaccio/existing_datasets/ARKitScenes
+
+  mv_info_base: /scratch2/generalvision/niuxuesong/sceneverse_caption
+  obj_img_base: /mnt/buffer/linghuxiongkun/data/msr3d/obj_img
+
+  msr3d_base: /mnt/buffer/linghuxiongkun/data/msr3d
+
+  # split one data item into multiple pieces roughly based on this, if needed
+  max_text_out_token_len: ${model.llm.max_out_len}
+
+# task details (dataset, dataloader, evaluator)
+task:
+  msr3d_train:
+    mode: [train]
+    dataset: MSR3DMix
+    dataset_wrapper: LeoScanFamilyDatasetWrapper # object padding
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    train_dataloader_args: ${dataloader.train}
+    eval_dataloader_args: ${dataloader.eval}
+  msqa_scannet:
+    mode: [val, test]
+    dataset: MSQAScanNet
+    dataset_wrapper: LeoScanFamilyDatasetWrapper
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: MSQAEval
+  msqa_3rscan:
+    mode: [val, test]
+    dataset: MSQA3RScan
+    dataset_wrapper: LeoScanFamilyDatasetWrapper
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: MSQAEval
+  msqa_arkitscenes:
+    mode: [val, test]
+    dataset: MSQAARkitScenes
+    dataset_wrapper: LeoScanFamilyDatasetWrapper
+    dataset_wrapper_args: ${dataset_wrapper.args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: MSQAEval
+
+# shared dataset_wrapper args
+dataset_wrapper:
+  args:
+    max_obj_len: 60
+    msr3d_max_img_num: 60
+    
+# shared eval args
+eval:
+  save: True # prediction saving does not work for now
+
+# shared dataloader args
+dataloader:
+  train:
+    # This is a per-gpu batchsize
+    batchsize: 4
+    num_workers: 0
+  eval:
+    # This is a per-gpu batchsize
+    batchsize: 4
+    num_workers: 0
+
+# Model details
+model:
+  name: MSR3D
+  prompter:
+    model:
+      name: OSE3DSituation
+      situation_type: 'as_transform_for_objects' # 'as_object',(LEO's method) 'as_object_add_loc', 'as_embedding', 'as_transform_for_objects' (MSR3D's method)
+      scene_token_len: 60
+      loc_fourier_dim: 63
+      hidden_size: 256
+      label_size: 300
+      vision_backbone_name: gtpcd # gt, gtpcd
+      # (S)patial-attention
+      use_spatial_attn: True
+      # (E)mbodied agent token
+      use_anchor: True
+      # additional additive orientation feature (to object features)
+      use_orientation: True
+      fourier_size: 84
+      attn_flat:
+        use_attn_flat: False
+        mcan_flat_mlp_size: 512
+        mcan_flat_glimpses: 1
+        mcan_flat_out_size: 1024
+      vision:
+        name: PcdObjEncoder
+        args:
+          sa_n_points: [32, 16, null]
+          sa_n_samples: [32, 32, null]
+          sa_radii: [0.2, 0.4, null]
+          sa_mlps: [[3, 64, 64, 128], [128, 128, 128, 256], [256, 256, 512, 768]]
+          dropout: 0.1
+          freeze: True
+          path: /home/maxiaojian/scratch/workspace/leo/pointnetpp.pt
+      spatial_encoder:
+        dim_loc: 6
+        num_attention_heads: 8
+        dim_feedforward: 2048
+        dropout: 0.1
+        activation: gelu
+        spatial_multihead: True
+        spatial_dim: 5  # 1, 4, 5
+        spatial_dist_norm: True
+        spatial_attn_fusion: cond  # cond, mul, bias, ctx, add
+        num_layers: 3
+        obj_loc_encoding: same_all # same_0, same_all, diff_all
+        pairwise_rel_type: center
+  vision_2d:
+    name: Backbone2D
+    freeze: True
+    args:
+      backbone_name: convnext_base
+      backbone_pretrain_dataset: laion2b
+      use_pretrain: True
+      # flat_output: True
+      pooling: avg # or conv, attn
+    # name: BLIP2Backbone
+    # args:
+    #   model_name: Salesforce/blip2-opt-2.7b
+    #   use_pretrain: True
+
+  llm:
+    name: Vicuna7B
+    cfg_path: /share/generalvision/linghuxiongkun/data/cache_models/huggingface_cache_model/vicuna-7b-v1.1
+    truncation_side: right
+    prompt: ""
+    max_out_len: 256
+    max_context_len: 256 # for prompt_after_obj
+    inference_mode: generation
+    clip_fusion: False
+    lora:
+      flag: True
+      rank: 16
+      alpha: 16
+      target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+      dropout: 0.0

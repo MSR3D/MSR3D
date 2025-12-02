@@ -167,6 +167,24 @@ img_sample = self.scan_data_loader.get_one_img(one_bbox)
 
 ```
 
+## 🕹 Training and evaluation
+- MSR3D model training:
+```
+sh msr3d.sh
+```
+- MSR3D evaluation:
+```
+sh msr3d_test.sh
+```
+- LEO model training:
+```
+msr3d_leo.sh
+```
+- LEO model evaluation:
+```
+msr3d_leo_test.sh
+```
+
 ## 📝 TODO List
 
 - [x] Test set, with ground truth multi-view images, object locations and attributes

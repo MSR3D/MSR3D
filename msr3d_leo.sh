@@ -1,0 +1,1 @@
+python launch.py --name msr3d --qos lv1 --gpu_per_node 4 --num_nodes 1 --port 2341 --time 72 --config configs/leo_3_dataset_pure_txt.yaml note=msr3d_baseline_fixed_leo

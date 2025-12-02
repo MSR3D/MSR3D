@@ -1,0 +1,1 @@
+python launch.py --name msr3d --mode python --qos lv1 --gpu_per_node 4 --num_nodes 1 --port 2341 --time 72 --config configs/test/leo_3_dataset_pure_txt_test_pred_pc.yaml
